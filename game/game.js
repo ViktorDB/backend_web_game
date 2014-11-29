@@ -22,7 +22,7 @@ function init() {
 
 	socket = io.listen(8000);
 
-	socket.configure(function() 
+	socket.configure(function()
 	{
     	socket.set("transports", ["websocket"]);
     	socket.set("log level", 2);
