@@ -60,6 +60,17 @@ module.exports = function(app, passport) {
 		req.logout();
 		res.redirect('/');
 	});
+
+
+
+    // =====================================
+    // GAME ==============================
+    // =====================================
+    app.get('/game', function(req, res) {
+        res.render('game.ejs', {
+
+        });
+    });
 };
 
 // route middleware to make sure
