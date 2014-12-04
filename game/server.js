@@ -18,7 +18,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
-require('./game.js');
+require('./gameServer.js');
 
 
 
