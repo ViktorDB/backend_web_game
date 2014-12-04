@@ -4,13 +4,15 @@
 var util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io");				// Socket.IO
 	Player = require("./Player").Player;	// Player class
+    Food = require("./Food").Food;          // Food class
 
 
 /**************************************************
 ** GAME VARIABLES
 **************************************************/
 var socket,		// Socket controller
-	players;	// Array of connected players
+	players,	// Array of connected players
+    foods;      // Array of foods
 
 
 /**************************************************
@@ -19,6 +21,8 @@ var socket,		// Socket controller
 function init() {
 	// Create an empty array to store players
 	players = [];
+
+    foods = [];
 
 	socket = io.listen(8000);
 
@@ -41,6 +45,7 @@ function onSocketConnection(client) {
     client.on("disconnect", onClientDisconnect);
     client.on("new player", onNewPlayer);
     client.on("move player", onMovePlayer);
+    client.on("new food", onNewFood);
 };
 
 function onClientDisconnect() {
@@ -74,6 +79,24 @@ function onNewPlayer(data) {
     players.push(newPlayer);
 
 };
+
+function onNewFood(data){
+    var startX = Math.round(Math.random()*(1000-5)),
+        startY = Math.round(Math.random()*(400-5));
+
+    var newFood = new Food(startX, startY);
+
+    this.broadcast.emit("new food", {x: newFood.getX(), y: newFood.getY()});
+
+    var i, existingFood;
+    for(i = 0; i < foods.length; i++){
+        existingFood = foods[i];
+        this.emit("new food", {x: existingFood.getX(), y: existingFood.getY()});
+    };
+
+    foods.push(newFood);
+
+}
 
 function onMovePlayer(data) {
 

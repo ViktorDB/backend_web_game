@@ -6,7 +6,9 @@ var canvas,			// Canvas DOM element
 	keys,			// Keyboard input
 	localPlayer,	// Local player
     remotePlayers,
-    socket;
+    socket,
+    foods,
+    localFood;
 
 
 /**************************************************
@@ -32,10 +34,12 @@ function init() {
 
 	// Initialise the local player
 	localPlayer = new Player(startX, startY);
+    localFood = new Food(Math.round(Math.random()*(canvas.width-5)), Math.round(Math.random()*(canvas.height-5)));
 
-    socket = io.connect("http://172.30.13.21", {port: 8000, transports: ["websocket"]});
+    socket = io.connect("http://172.30.34.26", {port: 8000, transports: ["websocket"]});
 
     remotePlayers = [];
+    foods = [];
 
 	// Start listening for events
 	setEventHandlers();
@@ -60,6 +64,7 @@ var setEventHandlers = function() {
     socket.on("new player", onNewPlayer);
     socket.on("move player", onMovePlayer);
     socket.on("remove player", onRemovePlayer);
+    socket.on("new food", onNewFood);
 };
 
 // Keyboard key down
@@ -87,6 +92,7 @@ function onSocketConnected() {
     console.log("Connected to socket server");
 
     socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
+    socket.emit("new food", {x: localFood.getX(), y: localFood.getY()});
 };
 
 function onSocketDisconnect() {
@@ -101,8 +107,14 @@ function onNewPlayer(data) {
     remotePlayers.push(newPlayer);
 };
 
-function onMovePlayer(data) {
+function onNewFood(data) {
+    console.log("New food made");
 
+    var newFood = new Food(data.x, data.y);
+    foods.push(newFood);
+};
+
+function onMovePlayer(data) {
     var movePlayer = playerById(data.id);
 
     if (!movePlayer) {
@@ -138,6 +150,7 @@ function animate() {
 
 	// Request a new animation frame using Paul Irish's shim
 	window.requestAnimFrame(animate);
+
 };
 
 
@@ -160,11 +173,19 @@ function draw() {
 
 	// Draw the local player
 	localPlayer.draw(ctx);
+    localFood.draw(ctx);
 
     var i;
     for (i = 0; i < remotePlayers.length; i++) {
         remotePlayers[i].draw(ctx);
     };
+
+    var y;
+    for (y = 0; y < foods.length; y++) {
+        foods[y].draw(ctx);
+    };
+
+
 };
 
 

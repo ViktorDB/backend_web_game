@@ -1,7 +1,7 @@
 /**************************************************
  ** FOOD CLASS
  **************************************************/
-var Player = function(startX, startY) {
+var Food = function(startX, startY) {
     var x = startX,
         y = startY,
         id,
@@ -45,8 +45,8 @@ var Player = function(startX, startY) {
     };
 
     var draw = function(ctx) {
-        ctx.fillRect(x-5, y-5, 10, 10);
-        ctx.fillStyle="#00FF00";
+        ctx.fillRect(x-20, y-20, 10, 10);
+        ctx.fillStyle="#0000FF";
     };
 
     return {
