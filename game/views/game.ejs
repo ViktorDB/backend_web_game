@@ -11,8 +11,17 @@
 </head>
 
 <body>
+
+<div class="players">
+    <ul>
+        <h2>YOU</h2>
+        <li><%= user.local.email %></li>
+    </ul>
+</div>
+
+
 <canvas id="gameCanvas"></canvas>
-<script src="http://192.168.7.226:8000/socket.io/socket.io.js"></script>
+<script src="http://172.30.13.21:8000/socket.io/socket.io.js"></script>
 <script src="js/requestAnimationFrame.js"></script>
 <script src="js/Keys.js"></script>
 <script src="js/Player.js"></script>

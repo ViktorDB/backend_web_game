@@ -66,10 +66,10 @@ module.exports = function(app, passport) {
     // =====================================
     // GAME ==============================
     // =====================================
-    app.get('/game', function(req, res) {
+    app.get('/game', isLoggedIn, function(req, res) {
         res.render('game.ejs', {
-
-        });
+            user : req.user
+        })
     });
 };
 

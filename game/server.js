@@ -9,6 +9,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+serverIP = "";
+
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
@@ -17,6 +19,23 @@ var session      = require('express-session');
 var configDB = require('./config/database.js');
 
 require('./game.js');
+
+
+
+var os=require('os');
+var ifaces=os.networkInterfaces();
+for (var dev in ifaces) {
+    var alias=0;
+    ifaces[dev].forEach(function(details){
+        if (details.family=='IPv4' && details.internal === false) {
+            console.log(dev+(alias?':'+alias:''),details.address);
+            serverIP = details.address;
+            ++alias;
+        }
+    });
+}
+
+console.log("IP IP IP: " + serverIP);
 
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
