@@ -116,6 +116,7 @@ function onSocketConnected() {
     console.log("Connected to socket server");
 
     socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
+
 };
 
 function onSocketDisconnect() {

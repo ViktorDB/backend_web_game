@@ -36,13 +36,11 @@ function init() {
 
     generateFood();
 
-
-
 };
 
 function generateFood()
 {
-    var id = 0
+    var id = 0;
     socket.sockets.on("connection", function (socket) {
 
         setInterval(function () {
@@ -62,9 +60,13 @@ function generateFood()
                 var newFood = {id: id , x: startX, y: startY};
                 foods.push(newFood);
 
-                socket.emit("getFood", foods);
+
                 util.log("food added to array and send to game");
 
+            }
+            else
+            {
+                socket.emit("getFood", foods);
             }
             
         }, 10);
@@ -79,6 +81,8 @@ var setEventHandlers = function() {
 };
 
 function onSocketConnection(client) {
+
+
     util.log("New player has connected: "+client.id);
     client.on("disconnect", onClientDisconnect);
     client.on("new player", onNewPlayer);
@@ -115,6 +119,8 @@ function onNewPlayer(data) {
 
     players.push(newPlayer);
 
+
+
 };
 
 
@@ -133,6 +139,7 @@ function onMovePlayer(data) {
     this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
 
     checkForFoodAndPlayerCollision(movePlayer);
+
 
 };
 
