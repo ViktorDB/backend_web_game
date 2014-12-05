@@ -55,6 +55,8 @@ function generateFood()
                 var startY = Math.round(Math.random()*(700));
                 startY = startY + "";
 
+                util.log("x:" + startX + "y:" + startY);
+
                 id++;
 
                 var newFood = {id: id , x: startX, y: startY};
@@ -136,19 +138,41 @@ function onMovePlayer(data) {
 
 function checkForFoodAndPlayerCollision(currentPlayer)
 {
+
+    var foodSize = 10, playerSize = 20, pX = currentPlayer.getX() / 2, pY = currentPlayer.getY() / 2;
+
     if(foods.length > 0)
     {
         for (var i = 0; i <= foods.length-1; i++)
         {
             //util.log(foods);
-            var foodx = (foods[i].x);
-            var foody = (foods[i].y);
-            if((foodx <= currentPlayer.getX()) && (foody < currentPlayer.getY()))
+            var foodx = (foods[i].x) + (foodSize/2);
+            var foody = (foods[i].y) + (foodSize/2);
+
+            var dist = calcDistance(foodx, foody, pX, pY);
+
+            util.log("food: ("+ foodx + ";"+ foody + ") player: (" + pX+";"+ pY+") distance: " + dist);
+
+            if(dist < 5)
             {
                 util.log("FOOD AND PLAYER COLLISION");
             }
         }
     }
+}
+
+function calcDistance(foodX, foodY, playerX, playerY)
+{
+    var xs = 0;
+    var ys = 0;
+
+    xs = foodX- playerX;
+    xs = xs * xs;
+
+    ys = foodY - playerY;
+    ys = ys * ys;
+    var dist = Math.sqrt(Math.pow((playerX- foodX), 2) + Math.pow((playerY - foodX), 2))
+    return dist;
 }
 
 
