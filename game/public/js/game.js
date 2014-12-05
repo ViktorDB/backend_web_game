@@ -22,8 +22,8 @@ function init() {
 	ctx = canvas.getContext("2d");
 
 	// Maximise the canvas
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.width = 500;
+	canvas.height = 500;
 
 	// Initialise keyboard controls
 	keys = new Keys();
@@ -172,9 +172,15 @@ function animate() {
 ** GAME UPDATE
 **************************************************/
 function update() {
+
+    // Maximise the canvas
+
+
     if (localPlayer.update(keys)) {
         socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
     };
+
+
 };
 
 
@@ -183,7 +189,8 @@ function update() {
 **************************************************/
 function draw() {
 	// Wipe the canvas clean
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, 500, 500);
+
 
 	// Draw the local player
 	localPlayer.draw(ctx);
