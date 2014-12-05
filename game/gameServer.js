@@ -67,7 +67,7 @@ function generateFood()
 
             }
             
-        }, 3000);
+        }, 1000);
 
     });
 }
@@ -139,7 +139,7 @@ function onMovePlayer(data) {
 function checkForFoodAndPlayerCollision(currentPlayer)
 {
 
-    var foodSize = 10, playerSize = 20, pX = currentPlayer.getX(), pY = currentPlayer.getY();
+    var pX = currentPlayer.getX(), pY = currentPlayer.getY();
 
     if(foods.length > 0)
     {
@@ -153,7 +153,7 @@ function checkForFoodAndPlayerCollision(currentPlayer)
 
             util.log("food: ("+ foodx + ";"+ foody + ") player: (" + pX+";"+ pY+") distance: " + dist.x + ":" + dist.y);
 
-            if((dist.x < 5) && (dist.x > -5) && (dist.y < 5) && (dist.y > -5))
+            if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
             {
                 util.log("FOOD AND PLAYER COLLISION");
             }
@@ -166,9 +166,11 @@ function calcDistance(foodX, foodY, playerX, playerY)
     var xs = 0;
     var ys = 0;
 
-    xs = foodX - playerX;
+    var foodSize = 10, playerSize = 20,
 
-    ys = foodY - playerY;
+    xs = foodX - playerX - playerSize;
+
+    ys = foodY - playerY - playerSize;
 
     var dist = {x: xs, y: ys};
 
