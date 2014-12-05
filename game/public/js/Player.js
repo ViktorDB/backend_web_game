@@ -45,7 +45,7 @@ var Player = function(startX, startY) {
 	};
 
 	var draw = function(ctx) {
-		ctx.fillRect(x-5, y-5, 10, 10);
+		ctx.fillRect(x-5, y-5, 20, 20);
         ctx.fillStyle="#FF0000";
 	};
 

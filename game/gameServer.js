@@ -12,7 +12,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 **************************************************/
 var socket,		// Socket controller
 	players,	// Array of connected players
-    foods;      // Array of foods
+    foodsArr;      // Array of foods
 
 
 /**************************************************
@@ -34,7 +34,43 @@ function init() {
 
 	setEventHandlers();
 
+    generateFood();
+
+
+
 };
+
+function generateFood()
+{
+    var id = 0
+    socket.sockets.on("connection", function (socket) {
+
+        setInterval(function () {
+
+            if(foods.length <= 10)
+            {
+
+                var startX = Math.round(Math.random()*(1800));
+                startX = startX + "";
+                var startY = Math.round(Math.random()*(700));
+                startY = startY + "";
+
+                id++;
+
+                var newFood = {id: id , x: startX, y: startY};
+                foods.push(newFood);
+
+                socket.emit("getFood", foods);
+                util.log("food added to array and send to game");
+
+            }
+            
+        }, 3000);
+
+    });
+}
+
+
 
 var setEventHandlers = function() {
     socket.sockets.on("connection", onSocketConnection);
@@ -45,7 +81,6 @@ function onSocketConnection(client) {
     client.on("disconnect", onClientDisconnect);
     client.on("new player", onNewPlayer);
     client.on("move player", onMovePlayer);
-    client.on("new food", onNewFood);
 };
 
 function onClientDisconnect() {
@@ -80,23 +115,6 @@ function onNewPlayer(data) {
 
 };
 
-function onNewFood(data){
-    var startX = Math.round(Math.random()*(1000-5)),
-        startY = Math.round(Math.random()*(400-5));
-
-    var newFood = new Food(startX, startY);
-
-    this.broadcast.emit("new food", {x: newFood.getX(), y: newFood.getY()});
-
-    var i, existingFood;
-    for(i = 0; i < foods.length; i++){
-        existingFood = foods[i];
-        this.emit("new food", {x: existingFood.getX(), y: existingFood.getY()});
-    };
-
-    foods.push(newFood);
-
-}
 
 function onMovePlayer(data) {
 
@@ -112,18 +130,38 @@ function onMovePlayer(data) {
 
     this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
 
+    checkForFoodAndPlayerCollision(movePlayer);
+
 };
+
+function checkForFoodAndPlayerCollision(currentPlayer)
+{
+    if(foods.length > 0)
+    {
+        for (var i = 0; i <= foods.length-1; i++)
+        {
+            //util.log(foods);
+            var foodx = (foods[i].x);
+            var foody = (foods[i].y);
+            if((foodx <= currentPlayer.getX()) && (foody < currentPlayer.getY()))
+            {
+                util.log("FOOD AND PLAYER COLLISION");
+            }
+        }
+    }
+}
 
 
 function playerById(id) {
     var i;
-    for (i = 0; i < players.length; i++) {
+    for (i = 0; i < players.length; ++i) {
         if (players[i].id == id)
             return players[i];
     };
 
     return false;
 };
+
 
 
 /**************************************************

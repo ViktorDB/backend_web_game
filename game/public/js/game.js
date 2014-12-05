@@ -7,8 +7,10 @@ var canvas,			// Canvas DOM element
 	localPlayer,	// Local player
     remotePlayers,
     socket,
-    foods,
+    foodsArray,
     localFood;
+
+
 
 
 /**************************************************
@@ -29,14 +31,17 @@ function init() {
 	// Calculate a random start position for the local player
 	// The minus 5 (half a player size) stops the player being
 	// placed right on the egde of the screen
-	var startX = Math.round(Math.random()*(canvas.width-5)),
-		startY = Math.round(Math.random()*(canvas.height-5));
+    var startX = Math.round(Math.random()*(canvas.width-5)),
+        startY = Math.round(Math.random()*(canvas.height-5));
+
+    foodsArray = [];
 
 	// Initialise the local player
 	localPlayer = new Player(startX, startY);
-    localFood = new Food(Math.round(Math.random()*(canvas.width-5)), Math.round(Math.random()*(canvas.height-5)));
 
-    socket = io.connect("http://172.30.34.26", {port: 8000, transports: ["websocket"]});
+    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
+
+
 
     remotePlayers = [];
     foods = [];
@@ -64,8 +69,22 @@ var setEventHandlers = function() {
     socket.on("new player", onNewPlayer);
     socket.on("move player", onMovePlayer);
     socket.on("remove player", onRemovePlayer);
-    socket.on("new food", onNewFood);
+
+    socket.on("getFood", function(foods) {
+        // todo: add the tweet as a DOM node
+        console.log(foods);
+
+        var index;
+        for (index = 0; index < foods.length; ++index) {
+
+            var tempFood = Food(foods[index].x, foods[index].y);
+            foodsArray.push(tempFood);
+        }
+
+    });
 };
+
+
 
 // Keyboard key down
 function onKeydown(e) {
@@ -92,7 +111,6 @@ function onSocketConnected() {
     console.log("Connected to socket server");
 
     socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
-    socket.emit("new food", {x: localFood.getX(), y: localFood.getY()});
 };
 
 function onSocketDisconnect() {
@@ -107,12 +125,6 @@ function onNewPlayer(data) {
     remotePlayers.push(newPlayer);
 };
 
-function onNewFood(data) {
-    console.log("New food made");
-
-    var newFood = new Food(data.x, data.y);
-    foods.push(newFood);
-};
 
 function onMovePlayer(data) {
     var movePlayer = playerById(data.id);
@@ -139,6 +151,8 @@ function onRemovePlayer(data) {
     remotePlayers.splice(remotePlayers.indexOf(removePlayer), 1);
 
 };
+
+
 
 
 /**************************************************
@@ -173,18 +187,16 @@ function draw() {
 
 	// Draw the local player
 	localPlayer.draw(ctx);
-    localFood.draw(ctx);
 
     var i;
     for (i = 0; i < remotePlayers.length; i++) {
         remotePlayers[i].draw(ctx);
     };
 
-    var y;
-    for (y = 0; y < foods.length; y++) {
-        foods[y].draw(ctx);
+    var i;
+    for (i = 0; i < foodsArray.length; i++) {
+        foodsArray[i].draw(ctx);
     };
-
 
 };
 
