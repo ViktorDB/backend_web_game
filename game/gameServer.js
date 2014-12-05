@@ -47,12 +47,12 @@ function generateFood()
 
         setInterval(function () {
 
-            if(foods.length <= 10)
+            if(foods.length <= 1)
             {
 
-                var startX = Math.round(Math.random()*(500));
+                var startX = Math.round(Math.random()*(500-40)) + 20;
                 startX = startX + "";
-                var startY = Math.round(Math.random()*(500));
+                var startY = Math.round(Math.random()*(500-40)) + 20;
                 startY = startY + "";
 
                 util.log("x:" + startX + "y:" + startY);
@@ -67,7 +67,7 @@ function generateFood()
 
             }
             
-        }, 1000);
+        }, 10);
 
     });
 }
@@ -156,6 +156,9 @@ function checkForFoodAndPlayerCollision(currentPlayer)
             if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
             {
                 util.log("FOOD AND PLAYER COLLISION");
+                util.log(foods);
+                foods.splice(i, 1);
+                util.log(foods);
             }
         }
     }

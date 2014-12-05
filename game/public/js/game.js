@@ -44,7 +44,7 @@ function init() {
 
 
     remotePlayers = [];
-    foods = [];
+
 
 	// Start listening for events
 	setEventHandlers();
@@ -73,7 +73,10 @@ var setEventHandlers = function() {
     socket.on("getFood", function(foods) {
         // todo: add the tweet as a DOM node
         console.log(foods);
+        console.log("Getting the food array from server");
 
+        //array leegmaken
+        foodsArray.length = 0;
         var index;
         for (index = 0; index < foods.length; ++index) {
 
@@ -82,6 +85,7 @@ var setEventHandlers = function() {
         }
 
     });
+
 };
 
 
@@ -98,6 +102,7 @@ function onKeyup(e) {
 	if (localPlayer) {
 		keys.onKeyUp(e);
 	};
+
 };
 
 // Browser window resize
