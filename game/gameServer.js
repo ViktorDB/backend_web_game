@@ -139,9 +139,40 @@ function onMovePlayer(data) {
     this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
 
     checkForFoodAndPlayerCollision(movePlayer);
-
+    checkForPlayersCollision(movePlayer);
 
 };
+
+function checkForPlayersCollision(currentPlayer){
+    var pX = currentPlayer.getX(), pY = currentPlayer.getY();
+
+    pX += 10;
+    pY += 10
+
+    for(var i = 0; i < players.length - 1; i++){
+        if(players[i].id != currentPlayer.id){
+
+            //util.log("other: "+players[i].id + "; current:" + currentPlayer.id);
+
+            var otherX = players[i].getX();
+            var otherY = players[i].getY();
+
+            otherX += 10;
+            otherY += 10;
+
+            //util.log("other: ("+ otherX + ";"+ otherY + ") player: (" + pX+";"+ pY+")");
+
+
+            var dist = calcDistancePlayers(otherX, otherY, pX, pY);
+            util.log("other: ("+ otherX + ";"+ otherY + ") player: (" + pX+";"+ pY+") distance: " + dist.x + ":" + dist.y);
+
+            if((dist.x < 20) && (dist.x > -20) && (dist.y < 20) && (dist.y > -20))
+            {
+                util.log("OTHER AND PLAYER COLLISION");
+            }
+        }
+    }
+}
 
 function checkForFoodAndPlayerCollision(currentPlayer)
 {
@@ -158,7 +189,7 @@ function checkForFoodAndPlayerCollision(currentPlayer)
 
             var dist = calcDistance(foodx, foody, pX, pY);
 
-            util.log("food: ("+ foodx + ";"+ foody + ") player: (" + pX+";"+ pY+") distance: " + dist.x + ":" + dist.y);
+            //util.log("food: ("+ foodx + ";"+ foody + ") player: (" + pX+";"+ pY+") distance: " + dist.x + ":" + dist.y);
 
             if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
             {
@@ -169,6 +200,16 @@ function checkForFoodAndPlayerCollision(currentPlayer)
             }
         }
     }
+}
+
+function calcDistancePlayers(p1X, p1Y, p2X, p2Y){
+
+    var xs = 0, ys = 0;
+    xs = p1X - p2X;
+    ys = p1Y - p2Y;
+
+    var dist = {x: xs, y: ys};
+    return dist;
 }
 
 function calcDistance(foodX, foodY, playerX, playerY)
