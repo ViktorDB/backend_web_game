@@ -68,6 +68,7 @@ function generateFood()
             {
                 socket.emit("getFood", foods);
             }
+
             
         }, 10);
 
@@ -140,6 +141,7 @@ function onMovePlayer(data) {
 
     checkForFoodAndPlayerCollision(movePlayer);
     checkForPlayersCollision(movePlayer);
+    checkForBorderCollision(movePlayer);
 
 };
 
@@ -202,6 +204,17 @@ function checkForFoodAndPlayerCollision(currentPlayer)
     }
 }
 
+function checkForBorderCollision(currentPlayer)
+{
+
+    var pX = currentPlayer.getX(), pY = currentPlayer.getY();
+
+    if((pX < 0) || (pX > 500) || (pY < 0) || (pY > 500))
+    {
+       util.log("BORDER COLLISION");
+    }
+}
+
 function calcDistancePlayers(p1X, p1Y, p2X, p2Y){
 
     var xs = 0, ys = 0;
@@ -238,6 +251,10 @@ function playerById(id) {
 
     return false;
 };
+
+
+
+
 
 
 

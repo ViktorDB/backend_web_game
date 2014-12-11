@@ -8,6 +8,8 @@ var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
+var util = require("util");				// Utility resources (logging, object inspection, etc)
+var io = require("socket.io");				// Socket.IO
 
 serverIP = "";
 

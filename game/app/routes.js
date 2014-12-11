@@ -40,6 +40,7 @@ module.exports = function(app, passport) {
 		successRedirect : '/profile', // redirect to the secure profile section
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
+
 	}));
 
 	// =====================================
@@ -66,9 +67,20 @@ module.exports = function(app, passport) {
     // =====================================
     // GAME ==============================
     // =====================================
+    var currPlayers = [];
+
     app.get('/game', isLoggedIn, function(req, res) {
+
+        var currentPlayer = {
+            'name': req.user.local.email
+        };
+
+        currPlayers.push(currentPlayer);
+
         res.render('game.ejs', {
-            user : req.user
+            user : req.user,
+            text : "test",
+            playerss : currPlayers
         })
     });
 };

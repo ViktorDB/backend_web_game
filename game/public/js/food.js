@@ -45,9 +45,8 @@ var Food = function(startX, startY) {
     };
 
     var draw = function(ctx) {
-        ctx.fillRect(x-20, y-20, 10, 10);
         ctx.fillStyle="#FF0000";
-
+        ctx.fillRect(x-20, y-20, 10, 10);
     };
 
     return {

@@ -38,10 +38,9 @@ function init() {
 
 	// Initialise the local player
 	localPlayer = new Player(startX, startY);
+    localPlayer.name = "MY_NAME";
 
-    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
-
-
+    socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
 
     remotePlayers = [];
 
@@ -72,8 +71,8 @@ var setEventHandlers = function() {
 
     socket.on("getFood", function(foods) {
         // todo: add the tweet as a DOM node
-        console.log(foods);
-        console.log("Getting the food array from server");
+        //console.log(foods);
+        //console.log("Getting the food array from server");
 
         //array leegmaken
         foodsArray.length = 0;
@@ -115,7 +114,7 @@ function onResize(e) {
 function onSocketConnected() {
     console.log("Connected to socket server");
 
-    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY()});
+    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), name:localPlayer.name});
 
 };
 

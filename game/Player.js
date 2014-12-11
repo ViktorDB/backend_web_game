@@ -5,6 +5,7 @@
 var Player = function(startX, startY) {
     var x = startX,
         y = startY,
+        name,
         id;
 
     var getX = function() {
@@ -23,13 +24,21 @@ var Player = function(startX, startY) {
         y = newY;
     };
 
+
+    //var players = [];
+
     return {
         getX: getX,
         getY: getY,
         setX: setX,
         setY: setY,
-        id: id
+        id: id,
+        name: name
+
+        //players: players
     }
 };
+
+Player.prototype.players = [];
 
 exports.Player = Player;

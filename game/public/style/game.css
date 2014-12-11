@@ -17,7 +17,13 @@ canvas {
     margin-right: auto;
     overflow: hidden;
 
-    border: 10px solid green;
+    border: 10px solid #fbfffd;
+}
+
+#pika
+{
+    width: 20px;
+    height: auto;
 }
 
 .players
