@@ -67,20 +67,13 @@ module.exports = function(app, passport) {
     // =====================================
     // GAME ==============================
     // =====================================
-    var currPlayers = [];
 
     app.get('/game', isLoggedIn, function(req, res) {
 
-        var currentPlayer = {
-            'name': req.user.local.email
-        };
-
-        currPlayers.push(currentPlayer);
 
         res.render('game.ejs', {
             user : req.user,
             text : "test",
-            playerss : currPlayers
         })
     });
 };

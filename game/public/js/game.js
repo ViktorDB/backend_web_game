@@ -42,9 +42,9 @@ function init() {
     socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
 	localPlayer = new Player(startX, startY, 0);
 
-    
-
-    localPlayer.name = "MY_NAME";
+    var element = document.getElementById("session-username");
+    var sessionusername = element.innerHTML;
+    localPlayer.name = sessionusername;
 
 
 
