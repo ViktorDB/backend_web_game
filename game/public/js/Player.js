@@ -56,18 +56,11 @@ var Player = function(startX, startY, pointsgiven) {
 	};
 
 	var draw = function(ctx) {
-<<<<<<< HEAD
         ctx.fillStyle = "#22a0de";
         ctx.fillRect(x-5, y-5, 20, 20);
 
 };
-=======
-        //console.log("points: " + points);
-        ctx.fillStyle="#FF0000";
-        ctx.fillRect(x-5, y-5, 20, 20);
 
-	};
->>>>>>> FETCH_HEAD
 
 	return {
         getX: getX,

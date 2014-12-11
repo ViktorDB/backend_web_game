@@ -37,18 +37,13 @@ function init() {
     foodsArray = [];
 
 	// Initialise the local player
-<<<<<<< HEAD
-	localPlayer = new Player(startX, startY);
-    localPlayer.name = "MY_NAME";
+
 
     socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
-=======
 	localPlayer = new Player(startX, startY, 0);
+    localPlayer.name = "MY_NAME";
 
-    socket = io.connect("http://172.30.34.13", {port: 8000, transports: ["websocket"]});
 
-
->>>>>>> FETCH_HEAD
 
     remotePlayers = [];
 
@@ -77,16 +72,13 @@ var setEventHandlers = function() {
     socket.on("move player", onMovePlayer);
     socket.on("remove player", onRemovePlayer);
     socket.on("getFood", function(foods) {
-<<<<<<< HEAD
         // todo: add the tweet as a DOM node
         //console.log(foods);
         //console.log("Getting the food array from server");
-=======
 
         /*console.log(foods);
         console.log("Getting the food array from server");
         */
->>>>>>> FETCH_HEAD
 
         //array leegmaken
         foodsArray.length = 0;
@@ -127,11 +119,7 @@ function onResize(e) {
 function onSocketConnected() {
     console.log("Connected to socket server");
 
-<<<<<<< HEAD
-    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), name:localPlayer.name});
-=======
-    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), points: localPlayer.getPoints()});
->>>>>>> FETCH_HEAD
+    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), points: localPlayer.getPoints(), name:localPlayer.name});
 
 };
 

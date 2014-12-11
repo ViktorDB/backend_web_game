@@ -5,13 +5,10 @@
 var Player = function(startX, startY, pointsgiven) {
     var x = startX,
         y = startY,
-<<<<<<< HEAD
         name,
-        id;
-=======
         id,
         points = pointsgiven;
->>>>>>> FETCH_HEAD
+
 
     var getX = function() {
         return x;
@@ -29,10 +26,8 @@ var Player = function(startX, startY, pointsgiven) {
         y = newY;
     };
 
-<<<<<<< HEAD
 
     //var players = [];
-=======
     var getPoints = function(){
         return points;
     };
@@ -40,24 +35,22 @@ var Player = function(startX, startY, pointsgiven) {
     var setPoints = function(newPoints) {
         points = newPoints;
     };
->>>>>>> FETCH_HEAD
 
     return {
         getX: getX,
         getY: getY,
         setX: setX,
         setY: setY,
-<<<<<<< HEAD
         id: id,
-        name: name
+        name: name,
 
         //players: players
-=======
+
         getPoints: getPoints,
         setPoints: setPoints,
 
         id: id
->>>>>>> FETCH_HEAD
+
     }
 };
 
