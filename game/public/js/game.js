@@ -8,6 +8,8 @@ var canvas,			// Canvas DOM element
     remotePlayers,
     socket,
     foodsArray,
+    usernameList,
+    userlistelement,
     localFood;
 
 
@@ -35,18 +37,19 @@ function init() {
         startY = Math.round(Math.random()*(canvas.height-5));
 
     foodsArray = [];
+    usernameList = [];
 
 	// Initialise the local player
 
 
-    socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
+    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
 	localPlayer = new Player(startX, startY, 0);
 
     var element = document.getElementById("session-username");
     var sessionusername = element.innerHTML;
     localPlayer.name = sessionusername;
 
-
+    userlistelement = document.getElementById("player-list");
 
     remotePlayers = [];
 
@@ -92,6 +95,23 @@ var setEventHandlers = function() {
             foodsArray.push(tempFood);
             //foodsArray[index].draw(ctx);
         }
+
+    });
+
+    var innerList;
+    socket.on("getPlayerList", function(usernamesInGame) {
+        innerList = "";
+        usernameList.length = 0;
+        var index;
+        for (index = 0; index < usernamesInGame.length; index++) {
+            var tempPlayer = {name:usernamesInGame[index].name};
+            innerList += "<li>" + tempPlayer.name + "</li>";
+            usernameList.push(tempPlayer);
+            //console.log(usernameList);
+        }
+        console.log(innerList);
+        document.getElementById("player-list").innerHTML = innerList;
+
 
     });
 
