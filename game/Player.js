@@ -2,10 +2,11 @@
  * Created by Viktor on 29/11/14.
  */
 
-var Player = function(startX, startY) {
+var Player = function(startX, startY, pointsgiven) {
     var x = startX,
         y = startY,
-        id;
+        id,
+        points = pointsgiven;
 
     var getX = function() {
         return x;
@@ -23,11 +24,22 @@ var Player = function(startX, startY) {
         y = newY;
     };
 
+    var getPoints = function(){
+        return points;
+    };
+
+    var setPoints = function(newPoints) {
+        points = newPoints;
+    };
+
     return {
         getX: getX,
         getY: getY,
         setX: setX,
         setY: setY,
+        getPoints: getPoints,
+        setPoints: setPoints,
+
         id: id
     }
 };
