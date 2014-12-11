@@ -107,15 +107,15 @@ function onClientDisconnect() {
 
 function onNewPlayer(data) {
 
-    var newPlayer = new Player(data.x, data.y);
+    var newPlayer = new Player(data.x, data.y, data.points);
     newPlayer.id = this.id;
 
-    this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY()});
+    this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY(), points: newPlayer.getPoints()});
 
     var i, existingPlayer;
     for (i = 0; i < players.length; i++) {
         existingPlayer = players[i];
-        this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY()});
+        this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), points:existingPlayer.getPoints()});
     };
 
     players.push(newPlayer);
@@ -137,9 +137,11 @@ function onMovePlayer(data) {
     movePlayer.setX(data.x);
     movePlayer.setY(data.y);
 
-    this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
-
     checkForFoodAndPlayerCollision(movePlayer);
+
+    this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), points: movePlayer.getPoints()});
+
+
     checkForPlayersCollision(movePlayer);
     checkForBorderCollision(movePlayer);
 
@@ -181,6 +183,8 @@ function checkForFoodAndPlayerCollision(currentPlayer)
 
     var pX = currentPlayer.getX(), pY = currentPlayer.getY();
 
+    var points = 0;
+
     if(foods.length > 0)
     {
         for (var i = 0; i <= foods.length-1; i++)
@@ -196,9 +200,10 @@ function checkForFoodAndPlayerCollision(currentPlayer)
             if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
             {
                 util.log("FOOD AND PLAYER COLLISION");
-                util.log(foods);
+                //util.log(foods);
                 foods.splice(i, 1);
-                util.log(foods);
+                //util.log(foods);
+                currentPlayer.setPoints(currentPlayer.getPoints() + 10);
             }
         }
     }

@@ -37,10 +37,18 @@ function init() {
     foodsArray = [];
 
 	// Initialise the local player
+<<<<<<< HEAD
 	localPlayer = new Player(startX, startY);
     localPlayer.name = "MY_NAME";
 
     socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
+=======
+	localPlayer = new Player(startX, startY, 0);
+
+    socket = io.connect("http://172.30.34.13", {port: 8000, transports: ["websocket"]});
+
+
+>>>>>>> FETCH_HEAD
 
     remotePlayers = [];
 
@@ -68,11 +76,17 @@ var setEventHandlers = function() {
     socket.on("new player", onNewPlayer);
     socket.on("move player", onMovePlayer);
     socket.on("remove player", onRemovePlayer);
-
     socket.on("getFood", function(foods) {
+<<<<<<< HEAD
         // todo: add the tweet as a DOM node
         //console.log(foods);
         //console.log("Getting the food array from server");
+=======
+
+        /*console.log(foods);
+        console.log("Getting the food array from server");
+        */
+>>>>>>> FETCH_HEAD
 
         //array leegmaken
         foodsArray.length = 0;
@@ -81,13 +95,12 @@ var setEventHandlers = function() {
 
             var tempFood = Food(foods[index].x, foods[index].y);
             foodsArray.push(tempFood);
+            //foodsArray[index].draw(ctx);
         }
 
     });
 
 };
-
-
 
 // Keyboard key down
 function onKeydown(e) {
@@ -114,7 +127,11 @@ function onResize(e) {
 function onSocketConnected() {
     console.log("Connected to socket server");
 
+<<<<<<< HEAD
     socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), name:localPlayer.name});
+=======
+    socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), points: localPlayer.getPoints()});
+>>>>>>> FETCH_HEAD
 
 };
 
@@ -125,9 +142,10 @@ function onSocketDisconnect() {
 function onNewPlayer(data) {
     console.log("New player connected: "+data.id);
 
-    var newPlayer = new Player(data.x, data.y);
+    var newPlayer = new Player(data.x, data.y, data.points);
     newPlayer.id = data.id;
     remotePlayers.push(newPlayer);
+    console.log(remotePlayers[0].getPoints());
 };
 
 
@@ -141,6 +159,9 @@ function onMovePlayer(data) {
 
     movePlayer.setX(data.x);
     movePlayer.setY(data.y);
+    movePlayer.setPoints(data.points);
+
+    console.log("moveplayer: " + data.points);
 
 };
 
@@ -185,6 +206,8 @@ function update() {
         socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
     };
 
+
+    console.log()
 
 };
 
