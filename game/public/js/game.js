@@ -41,6 +41,9 @@ function init() {
 
     socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
 	localPlayer = new Player(startX, startY, 0);
+
+    
+
     localPlayer.name = "MY_NAME";
 
 
@@ -129,11 +132,13 @@ function onSocketDisconnect() {
 
 function onNewPlayer(data) {
     console.log("New player connected: "+data.id);
+    console.log(data);
 
-    var newPlayer = new Player(data.x, data.y, data.points);
+    var newPlayer = new Player(data.x, data.y, data.points, data.name);
     newPlayer.id = data.id;
     remotePlayers.push(newPlayer);
     console.log(remotePlayers[0].getPoints());
+    //console.log(data);
 };
 
 

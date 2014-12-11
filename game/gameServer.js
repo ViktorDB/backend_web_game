@@ -106,16 +106,17 @@ function onClientDisconnect() {
 };
 
 function onNewPlayer(data) {
-
+    util.log(data.name);
     var newPlayer = new Player(data.x, data.y, data.points);
+    newPlayer.name = data.name;
     newPlayer.id = this.id;
 
-    this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY(), points: newPlayer.getPoints()});
+    this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY(), points: newPlayer.getPoints(), name: newPlayer.name});
 
     var i, existingPlayer;
     for (i = 0; i < players.length; i++) {
         existingPlayer = players[i];
-        this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), points:existingPlayer.getPoints()});
+        this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY(), points:existingPlayer.getPoints(), name: newPlayer.name});
     };
 
     players.push(newPlayer);
