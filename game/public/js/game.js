@@ -42,6 +42,11 @@ function init() {
 	// Initialise the local player
     socket = io.connect("http://172.30.34.13", {port: 8000, transports: ["websocket"]});
 
+<<<<<<< Updated upstream
+=======
+
+    socket = io.connect("http://172.30.13.15", {port: 8000, transports: ["websocket"]});
+>>>>>>> Stashed changes
 	localPlayer = new Player(startX, startY, 0);
 
     var element = document.getElementById("session-username");
