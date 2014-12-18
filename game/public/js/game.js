@@ -8,6 +8,8 @@ var canvas,			// Canvas DOM element
     remotePlayers,
     socket,
     foodsArray,
+    usernameList,
+    userlistelement,
     localFood;
 
 
@@ -35,18 +37,17 @@ function init() {
         startY = Math.round(Math.random()*(canvas.height-5));
 
     foodsArray = [];
+    usernameList = [];
 
 	// Initialise the local player
-
-
-    socket = io.connect("http://172.30.13.29", {port: 8000, transports: ["websocket"]});
+    socket = io.connect("http://172.30.34.13", {port: 8000, transports: ["websocket"]});
 	localPlayer = new Player(startX, startY, 0);
 
     var element = document.getElementById("session-username");
     var sessionusername = element.innerHTML;
     localPlayer.name = sessionusername;
 
-
+    userlistelement = document.getElementById("player-list");
 
     remotePlayers = [];
 
@@ -92,6 +93,23 @@ var setEventHandlers = function() {
             foodsArray.push(tempFood);
             //foodsArray[index].draw(ctx);
         }
+
+    });
+
+    var innerList;
+    socket.on("getPlayerList", function(usernamesInGame) {
+        innerList = "";
+        usernameList.length = 0;
+        var index;
+        for (index = 0; index < usernamesInGame.length; index++) {
+            var tempPlayer = {name:usernamesInGame[index].name};
+            innerList += "<li>" + tempPlayer.name + "</li>";
+            usernameList.push(tempPlayer);
+            //console.log(usernameList);
+        }
+        console.log(innerList);
+        document.getElementById("player-list").innerHTML = innerList;
+
 
     });
 
@@ -158,6 +176,54 @@ function onMovePlayer(data) {
 
 };
 
+
+function calcDistance(foodX, foodY, playerX, playerY)
+{
+    var xs = 0;
+    var ys = 0;
+
+    var foodSize = 10, playerSize = 20,
+
+    xs = foodX - playerX - playerSize;
+
+    ys = foodY - playerY - playerSize;
+
+    //console.log(foodX + " " + foodY + " " + playerX + " " + playerY);
+
+    var dist = {x: xs, y: ys};
+
+    return dist;
+}
+
+function checkForFoodAndPlayerCollision(currentPlayer)
+{
+
+    var pX = currentPlayer.getX(), pY = currentPlayer.getY();
+
+    if(foodsArray.length > 0)
+    {
+        for (var i = 0; i <= foodsArray.length-1; i++)
+        {
+            //util.log(foods);
+            var foodx = (foodsArray[i].getX());
+            var foody = (foodsArray[i].getY());
+
+            //console.log(foodsArray);
+
+            var dist = calcDistance(foodx, foody, pX, pY);
+
+            //console.log("dist: " + dist.x + ";" + dist.y );
+
+            if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
+            {
+                currentPlayer.setPoints(currentPlayer.getPoints() + 10);
+                console.log("Localplayer points: " + localPlayer.getPoints());
+            }
+        }
+    }
+}
+
+
 function onRemovePlayer(data) {
 
     var removePlayer = playerById(data.id);
@@ -197,6 +263,8 @@ function update() {
 
     if (localPlayer.update(keys)) {
         socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
+        console.log("move localplayer");
+        checkForFoodAndPlayerCollision(localPlayer);
     };
 
 

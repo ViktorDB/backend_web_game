@@ -12,7 +12,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 **************************************************/
 var socket,		// Socket controller
 	players,	// Array of connected players
-    foodsArr;      // Array of foods
+    foodsArr,      // Array of foods
+    usernamesInGame;
 
 
 /**************************************************
@@ -23,6 +24,7 @@ function init() {
 	players = [];
 
     foods = [];
+    usernamesInGame = [];
 
 	socket = io.listen(8000);
 
@@ -69,6 +71,8 @@ function generateFood()
                 socket.emit("getFood", foods);
             }
 
+            socket.emit("getPlayerList", usernamesInGame);
+
             
         }, 10);
 
@@ -101,11 +105,13 @@ function onClientDisconnect() {
     };
 
     players.splice(players.indexOf(removePlayer), 1);
+    usernamesInGame.splice(usernamesInGame.indexOf(removePlayer), 1);
     this.broadcast.emit("remove player", {id: this.id});
 
 };
 
 function onNewPlayer(data) {
+
     util.log(data.name);
     var newPlayer = new Player(data.x, data.y, data.points);
     newPlayer.name = data.name;
@@ -120,6 +126,7 @@ function onNewPlayer(data) {
     };
 
     players.push(newPlayer);
+    usernamesInGame.push(newPlayer);
 
 
 

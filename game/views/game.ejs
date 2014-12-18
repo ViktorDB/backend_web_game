@@ -14,7 +14,13 @@
 
 <div class="players">
     <ul>
-        <li id="session-username">YOU: <%=  user.local.email %></li>
+        YOU: <li id="session-username"><%=  user.local.email %></li>
+    </ul>
+    <br/>
+    <br/>
+    <p>All Users</p>
+    <ul id="player-list">
+
     </ul>
 </div>
 
@@ -25,7 +31,8 @@
     <canvas id="gameCanvas"></canvas>
 </div>
 
-<script src="http://172.30.13.29:8000/socket.io/socket.io.js"></script>
+<script src="http://172.30.34.13:8000/socket.io/socket.io.js"></script>
+
 <script src="js/requestAnimationFrame.js"></script>
 <script src="js/Keys.js"></script>
 <script src="js/Player.js"></script>
