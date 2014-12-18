@@ -99,14 +99,15 @@ var setEventHandlers = function() {
 
     var innerList;
     socket.on("getPlayerList", function(usernamesInGame) {
+        //console.log("USERNAMESINGAME: "+usernamesInGame);
         innerList = "";
         usernameList.length = 0;
         var index;
         for (index = 0; index < usernamesInGame.length; index++) {
-            var tempPlayer = {name:usernamesInGame[index].name};
-            innerList += "<li>" + tempPlayer.name + "</li>";
+            var tempPlayer = {name:usernamesInGame[index].name, points: usernamesInGame[index].points};
+            innerList += "<li>" + tempPlayer.name + " - " + tempPlayer.points +  "</li>";
             usernameList.push(tempPlayer);
-            //console.log(usernameList);
+            //console.log("POINTS " + usernamesInGame[index].points);
         }
         console.log(innerList);
         document.getElementById("player-list").innerHTML = innerList;

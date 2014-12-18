@@ -71,7 +71,12 @@ function generateFood()
                 socket.emit("getFood", foods);
             }
 
-            socket.emit("getPlayerList", usernamesInGame);
+            if(usernamesInGame.length > 0)
+            {
+                socket.emit("getPlayerList", usernamesInGame);
+                util.log("POINTS SERVER : " + usernamesInGame[0].points);
+            }
+
 
             
         }, 10);
@@ -114,6 +119,7 @@ function onNewPlayer(data) {
 
     util.log(data.name);
     var newPlayer = new Player(data.x, data.y, data.points);
+    newPlayer.points = data.points;
     newPlayer.name = data.name;
     newPlayer.id = this.id;
 
@@ -211,8 +217,23 @@ function checkForFoodAndPlayerCollision(currentPlayer)
                 //util.log(foods);
                 foods.splice(i, 1);
                 //util.log(foods);
-                currentPlayer.setPoints(currentPlayer.getPoints() + 10);
-            }
+                currentPlayer.setPoints(currentPlayer.getPoints() + 1);
+
+
+                //ARRAY VAN SPELERS AANPASSEN (PUNTJE BIJTELLEN)
+                for(var i = 0; i < usernamesInGame.length; i++)
+                {
+                    if(currentPlayer.id == usernamesInGame[i].id)
+                    {
+                        //util.log("POINTS1 " + usernamesInGame[i].getPoints());
+                        usernamesInGame[i].points = usernamesInGame[i].points + 10;
+                        //util.log("POINTS " + usernamesInGame[i].getPoints());
+                        //util.log("POINTS GAINED");
+                    }
+                }
+                //usernamesInGame.splice(usernamesInGame.indexOf(removePlayer), 1);
+
+            };
         }
     }
 }
