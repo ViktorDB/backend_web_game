@@ -40,7 +40,13 @@ function init() {
     usernameList = [];
 
 	// Initialise the local player
+<<<<<<< HEAD
     socket = io.connect("http://172.30.34.13", {port: 8000, transports: ["websocket"]});
+=======
+
+
+    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
+>>>>>>> FETCH_HEAD
 	localPlayer = new Player(startX, startY, 0);
 
     var element = document.getElementById("session-username");
