@@ -170,7 +170,15 @@ function onMovePlayer(data) {
 
     checkForFoodAndPlayerCollision(movePlayer);
 
-    this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), points: movePlayer.getPoints()});
+    var pX = movePlayer.getX(), pY = movePlayer.getY();
+
+    if((pX < 0) || (pX > 500) || (pY < 0) || (pY > 500))
+    {
+        util.log("BORDER COLLISION");
+    }else{
+        this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY(), points: movePlayer.getPoints()});
+    }
+
 
 
     checkForPlayersCollision(movePlayer);
@@ -259,6 +267,8 @@ function checkForBorderCollision(currentPlayer)
 {
 
     var pX = currentPlayer.getX(), pY = currentPlayer.getY();
+
+    util.log("x: " + pX + " y:" + pY);
 
     if((pX < 0) || (pX > 500) || (pY < 0) || (pY > 500))
     {

@@ -52,6 +52,12 @@ var Player = function(startX, startY, pointsgiven) {
 			x += moveAmount;
 		};
 
+        console.log("x: "+ x + " y: " + y);
+        if((x < 0) || (x > 500) || (y < 0) || (y > 500)){
+            x = prevX;
+            y = prevY;
+            return false;
+        }
         return (prevX != x || prevY != y) ? true : false;
 	};
 
