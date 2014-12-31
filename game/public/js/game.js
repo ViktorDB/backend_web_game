@@ -374,6 +374,7 @@ function onNewMessage(data) {
     chatbox.innerHTML +=    "<p>" +
                             data.user + " : " + data.text +
                             "</p>";
+    scrollToBottom();
 }
 
 function scrollToBottom() {
