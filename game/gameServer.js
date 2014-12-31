@@ -45,6 +45,7 @@ function init() {
 function generateFood()
 {
     var id = 0;
+    var timerStartTime = 10000;
     socket.sockets.on("connection", function (socket) {
 
         var miliSeconds = 1;
@@ -80,10 +81,19 @@ function generateFood()
                 //util.log("POINTS SERVER : " + usernamesInGame[0].points);
             }
 
-            if(gameTimer < 60000 )
+            if(gameTimer > 0 )
             {
-                gameTimer = gameTimer + miliSeconds;
+                gameTimer = gameTimer - miliSeconds;
                 socket.emit("updateTimer", gameTimer);
+            }
+            else
+            {
+                for(var p = 0; p < usernamesInGame.length; p++)
+                {
+                    usernamesInGame[p].points = 0;
+                }
+
+                gameTimer = timerStartTime;
             }
             
         }, miliSeconds);
