@@ -10,6 +10,7 @@ var canvas,			// Canvas DOM element
     foodsArray,
     usernameList,
     userlistelement,
+    localGameTimer,
     localFood;
 
 
@@ -38,9 +39,10 @@ function init() {
 
     foodsArray = [];
     usernameList = [];
+    localGameTimer = 0;
 
 	// Initialise the local player
-    socket = io.connect("http://172.30.13.15", {port: 8000, transports: ["websocket"]});
+    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
 
 	localPlayer = new Player(startX, startY, 0);
 
@@ -109,9 +111,36 @@ var setEventHandlers = function() {
             usernameList.push(tempPlayer);
             //console.log("POINTS " + usernamesInGame[index].points);
         }
-        console.log(innerList);
+        //console.log(innerList);
         document.getElementById("player-list").innerHTML = innerList;
 
+
+    });
+
+
+    //UPDATE TIMER
+    socket.on("updateTimer", function(gameTimer) {
+
+        localGameTimer = gameTimer;
+
+        time = gameTimer / 8000;
+        seconds = time % 60;
+        seconds = Math.floor(seconds);
+        time /= 60;
+        minutes = time % 60;
+        minutes = Math.floor(minutes);
+
+        if(seconds < 10)
+        {
+            var strTime = minutes + " : 0" + seconds;
+        }
+        else
+        {
+            var strTime = minutes + " : " + seconds;
+        }
+
+
+        document.getElementById("timer").innerHTML = strTime;
 
     });
 
@@ -120,7 +149,7 @@ var setEventHandlers = function() {
 // Keyboard key down
 function onKeydown(e) {
 	if (localPlayer) {
-		keys.onKeyDown(e);
+        keys.onKeyDown(e);
 	};
 };
 
@@ -165,12 +194,16 @@ function onNewPlayer(data) {
 function onMovePlayer(data) {
     var movePlayer = playerById(data.id);
 
+    console.log("kom ik hier in?");
+
     if (!movePlayer) {
         console.log("Player not found: "+data.id);
         return;
     };
 
     movePlayer.setX(data.x);
+    console.log('moveplayer');
+
     movePlayer.setY(data.y);
     movePlayer.setPoints(data.points);
 
@@ -265,7 +298,7 @@ function update() {
 
     if (localPlayer.update(keys)) {
         socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
-        console.log("move localplayer");
+        //console.log("move localplayer");
         checkForFoodAndPlayerCollision(localPlayer);
     };
 

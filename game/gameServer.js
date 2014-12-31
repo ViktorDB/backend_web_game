@@ -13,6 +13,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 var socket,		// Socket controller
 	players,	// Array of connected players
     foodsArr,      // Array of foods
+    gameTimer,
     usernamesInGame;
 
 
@@ -25,6 +26,7 @@ function init() {
 
     foods = [];
     usernamesInGame = [];
+    gameTimer = 0;
 
 	socket = io.listen(8000);
 
@@ -45,6 +47,7 @@ function generateFood()
     var id = 0;
     socket.sockets.on("connection", function (socket) {
 
+        var miliSeconds = 1;
         setInterval(function () {
 
             if(foods.length <= 1)
@@ -77,9 +80,11 @@ function generateFood()
                 util.log("POINTS SERVER : " + usernamesInGame[0].points);
             }
 
+            gameTimer = gameTimer + miliSeconds;
+            socket.emit("updateTimer", gameTimer);
 
             
-        }, 10);
+        }, miliSeconds);
 
     });
 }
@@ -226,7 +231,7 @@ function checkForFoodAndPlayerCollision(currentPlayer)
                     if(currentPlayer.id == usernamesInGame[i].id)
                     {
                         //util.log("POINTS1 " + usernamesInGame[i].getPoints());
-                        usernamesInGame[i].points = usernamesInGame[i].points + 10;
+                        usernamesInGame[i].points = usernamesInGame[i].points + 1;
                         //util.log("POINTS " + usernamesInGame[i].getPoints());
                         //util.log("POINTS GAINED");
                     }
