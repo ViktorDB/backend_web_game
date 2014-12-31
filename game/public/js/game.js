@@ -11,6 +11,8 @@ var canvas,			// Canvas DOM element
     usernameList,
     userlistelement,
     localGameTimer,
+    chatText,
+    chatbox,
     localFood;
 
 
@@ -42,7 +44,8 @@ function init() {
     localGameTimer = 0;
 
 	// Initialise the local player
-    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
+
+    socket = io.connect("http://192.168.1.14", {port: 8000, transports: ["websocket"]});
 
 	localPlayer = new Player(startX, startY, 0);
 
@@ -58,7 +61,10 @@ function init() {
 	// Start listening for events
 	setEventHandlers();
 
-
+    //chatbox button click
+    document.getElementById("send").addEventListener("click", sendChatMessage);
+    chatText = document.getElementById('chatText');
+    chatbox = document.getElementById('chatbox');
 };
 
 
@@ -78,8 +84,9 @@ var setEventHandlers = function() {
     socket.on("new player", onNewPlayer);
     socket.on("move player", onMovePlayer);
     socket.on("remove player", onRemovePlayer);
+    socket.on("message from server", onNewMessage);
     socket.on("getFood", function(foods) {
-        // todo: add the tweet as a DOM node
+
         //console.log(foods);
         //console.log("Getting the food array from server");
 
@@ -342,3 +349,34 @@ function playerById(id) {
 
     return false;
 };
+
+
+/**************************************************
+ ** CHAT BOX
+ **************************************************/
+
+function sendChatMessage(){
+    if(chatText.value != ""){
+        //console.log("SEND MESSAGE: " + localPlayer.name + " " + chatText.value);
+        socket.emit("message from client", {user: localPlayer.name, text: chatText.value});
+
+        chatbox.innerHTML +=    "<p>" +
+                                "Ikke : " + chatText.value +
+                                "</p>";
+
+        chatText.value = "";
+        scrollToBottom();
+    }
+}
+
+function onNewMessage(data) {
+    console.log(data.user + " " + data.text);
+    chatbox.innerHTML +=    "<p>" +
+                            data.user + " : " + data.text +
+                            "</p>";
+}
+
+function scrollToBottom() {
+    var objDiv = document.getElementById("chatbox");
+    objDiv.scrollTop = objDiv.scrollHeight;
+}

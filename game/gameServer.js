@@ -77,7 +77,7 @@ function generateFood()
             if(usernamesInGame.length > 0)
             {
                 socket.emit("getPlayerList", usernamesInGame);
-                util.log("POINTS SERVER : " + usernamesInGame[0].points);
+                //util.log("POINTS SERVER : " + usernamesInGame[0].points);
             }
 
             gameTimer = gameTimer + miliSeconds;
@@ -97,11 +97,11 @@ var setEventHandlers = function() {
 
 function onSocketConnection(client) {
 
-
     util.log("New player has connected: "+client.id);
     client.on("disconnect", onClientDisconnect);
     client.on("new player", onNewPlayer);
     client.on("move player", onMovePlayer);
+    client.on("message from client", onMessageFromClient);
 };
 
 function onClientDisconnect() {
@@ -292,7 +292,12 @@ function playerById(id) {
 };
 
 
-
+/**************************************************
+ ** CHATBOX
+ **************************************************/
+function onMessageFromClient(data){
+    this.broadcast.emit("message from server",{user: data.user, text: data.text});
+}
 
 
 
