@@ -14,6 +14,8 @@ var socket,		// Socket controller
 	players,	// Array of connected players
     foodsArr,      // Array of foods
     gameTimer,
+    winnerLastRoundName,
+    winnerLastRoundPlayer,
     usernamesInGame;
 
 
@@ -91,7 +93,19 @@ function generateFood()
                 for(var p = 0; p < usernamesInGame.length; p++)
                 {
                     usernamesInGame[p].points = 0;
+
+                    if( p == 0)
+                    {
+                        winnerLastRoundPlayer = usernamesInGame[p];
+                    }
+
+                    if( winnerLastRoundPlayer.points < usernamesInGame[p] )
+                    {
+                        winnerLastRoundPlayer = usernamesInGame[p];
+                    }
                 }
+
+                socket.emit("lastRoundWinner", winnerLastRoundPlayer);
 
                 gameTimer = timerStartTime;
             }

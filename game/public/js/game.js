@@ -13,6 +13,7 @@ var canvas,			// Canvas DOM element
     localGameTimer,
     chatText,
     chatbox,
+    winner,
     localFood;
 
 
@@ -148,6 +149,17 @@ var setEventHandlers = function() {
 
 
         document.getElementById("timer").innerHTML = strTime;
+
+    });
+
+    //UPDATE WINNER
+    socket.on("lastRoundWinner", function(playerWinner) {
+
+        var tempPlayer = {name:playerWinner.name};
+        winner = tempPlayer;
+
+
+        document.getElementById("winnerLastRound").innerHTML = winner.name;
 
     });
 

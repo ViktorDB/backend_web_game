@@ -33,6 +33,13 @@ canvas {
 
 #timer {
     color: white;
+    margin-top: 30px;
+}
+
+#previousWinnerContainer
+{
+    margin-top: 30px;
+    color: white;
 }
 
 #chat{
