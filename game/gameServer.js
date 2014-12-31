@@ -80,9 +80,11 @@ function generateFood()
                 //util.log("POINTS SERVER : " + usernamesInGame[0].points);
             }
 
-            gameTimer = gameTimer + miliSeconds;
-            socket.emit("updateTimer", gameTimer);
-
+            if(gameTimer < 60000 )
+            {
+                gameTimer = gameTimer + miliSeconds;
+                socket.emit("updateTimer", gameTimer);
+            }
             
         }, miliSeconds);
 

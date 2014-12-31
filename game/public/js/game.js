@@ -130,7 +130,7 @@ var setEventHandlers = function() {
 
         localGameTimer = gameTimer;
 
-        time = gameTimer / 8000;
+        time = gameTimer / 1000;
         seconds = time % 60;
         seconds = Math.floor(seconds);
         time /= 60;
