@@ -112,7 +112,7 @@ function generateFood()
 
 function timerControl(){
 
-    var timerStartTime = 91000;
+    var timerStartTime = 121000;
 
     var miliSeconds = 10;
     setInterval(function () {
