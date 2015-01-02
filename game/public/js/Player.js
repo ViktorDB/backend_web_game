@@ -5,9 +5,11 @@ var Player = function(startX, startY, pointsgiven) {
 	var x = startX,
 		y = startY,
         id,
-		moveAmount = 2,
-        points = pointsgiven;
+		moveAmount = 3,
+        points = pointsgiven,
+        monsterImage = new Image();
 
+    monsterImage.src = "../assets/monsterkopie2.png";
 
     var getX = function() {
         return x;
@@ -63,8 +65,8 @@ var Player = function(startX, startY, pointsgiven) {
 
 	var draw = function(ctx) {
         ctx.fillStyle = "#22a0de";
-        ctx.fillRect(x-5, y-5, 20, 20);
-
+        //ctx.fillRect(x-5, y-5, 20, 20);
+        ctx.drawImage(monsterImage, x-5, y-5);
 };
 
 

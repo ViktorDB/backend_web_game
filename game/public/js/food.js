@@ -5,7 +5,9 @@ var Food = function(startX, startY) {
     var x = startX,
         y = startY,
         id,
-        moveAmount = 2;
+        planetImage = new Image();
+
+    planetImage.src = "../assets/planet.png";
 
     var getX = function() {
         return x;
@@ -46,7 +48,8 @@ var Food = function(startX, startY) {
 
     var draw = function(ctx) {
         ctx.fillStyle="#FF0000";
-        ctx.fillRect(x-20, y-20, 10, 10);
+        //ctx.fillRect(x-20, y-20, 10, 10);
+        ctx.drawImage(planetImage, x-22, y-22);
     };
 
     return {
