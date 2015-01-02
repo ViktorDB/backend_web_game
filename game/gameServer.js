@@ -16,6 +16,7 @@ var socket,		// Socket controller
     gameTimer,
     winnerLastRoundName,
     winnerLastRoundPlayer,
+    firstConnection,
     usernamesInGame;
 
 
@@ -29,6 +30,7 @@ function init() {
     foods = [];
     usernamesInGame = [];
     gameTimer = 0;
+    firstConnection = false;
 
 	socket = io.listen(8000);
 
@@ -42,6 +44,8 @@ function init() {
 
     generateFood();
 
+    checkPreviousWinner();
+
 };
 
 function generateFood()
@@ -50,6 +54,8 @@ function generateFood()
     var timerStartTime = 10000;
     socket.sockets.on("connection", function (socket) {
 
+
+        //DE INTERVAL!!!
         var miliSeconds = 1;
         setInterval(function () {
 
@@ -92,26 +98,47 @@ function generateFood()
             {
                 for(var p = 0; p < usernamesInGame.length; p++)
                 {
-                    usernamesInGame[p].points = 0;
-
                     if( p == 0)
                     {
                         winnerLastRoundPlayer = usernamesInGame[p];
+                        util.log("first player loop");
                     }
 
-                    if( winnerLastRoundPlayer.points < usernamesInGame[p] )
+                    util.log("NAAM: " + usernamesInGame[p].name + usernamesInGame[p].points);
+
+
+                    if( winnerLastRoundPlayer.points < usernamesInGame[p].points )
                     {
                         winnerLastRoundPlayer = usernamesInGame[p];
+                        util.log("player winner changed");
                     }
+
+                    usernamesInGame[p].points = 0;
                 }
 
                 socket.emit("lastRoundWinner", winnerLastRoundPlayer);
 
+
+
                 gameTimer = timerStartTime;
             }
+
+
+
             
         }, miliSeconds);
 
+
+    });
+
+
+}
+
+function checkPreviousWinner()
+{
+    var test = 'test';
+    socket.sockets.on("connection", function (socket) {
+        socket.emit('news', test);
     });
 }
 

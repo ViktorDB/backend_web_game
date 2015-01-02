@@ -12,25 +12,29 @@
 
 <body>
 
-<div class="players">
-    <ul>
-        YOU: <li id="session-username"><%=  user.local.email %></li>
-    </ul>
-    <br/>
-    <br/>
-    <p>All Users</p>
-    <ul id="player-list">
+<div id="leftWrapper">
+    <div class="players">
+        <ul>
+            YOU: <li id="session-username"><%=  user.local.email %></li>
+        </ul>
+        <br/>
+        <br/>
+        <p>All Users</p>
+        <ul id="player-list">
 
-    </ul>
+        </ul>
+    </div>
 </div>
 
 <div id="timer">
 0
 </div>
 
-<div id="previousWinnerContainer">
-    The winner of last round:
-    <div id="winnerLastRound">...</div>
+<div id="rightWrapper">
+    <div id="previousWinnerContainer">
+        The winner of last round:
+        <div id="winnerLastRound">...</div>
+    </div>
 </div>
 
 <!--<img id="pika" src="assets/pika.png" alt="pika"/>-->

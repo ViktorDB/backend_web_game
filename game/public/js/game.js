@@ -163,6 +163,10 @@ var setEventHandlers = function() {
 
     });
 
+    socket.on('news', function(msg){
+        console.log("NEWS");
+    });
+
 };
 
 // Keyboard key down
@@ -373,7 +377,7 @@ function sendChatMessage(){
         socket.emit("message from client", {user: localPlayer.name, text: chatText.value});
 
         chatbox.innerHTML +=    "<p>" +
-                                "Ikke : " + chatText.value +
+                                "ME : " + chatText.value +
                                 "</p>";
 
         chatText.value = "";
