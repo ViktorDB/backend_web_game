@@ -44,6 +44,7 @@ function init() {
 
     generateFood();
 
+
     checkPreviousWinner();
 
 };
@@ -52,6 +53,9 @@ function generateFood()
 {
     var id = 0;
     var timerStartTime = 10000;
+
+    timerControl();
+
     socket.sockets.on("connection", function (socket) {
 
 
@@ -91,48 +95,60 @@ function generateFood()
 
             if(gameTimer > 0 )
             {
-                gameTimer = gameTimer - miliSeconds;
                 socket.emit("updateTimer", gameTimer);
-            }
-            else
-            {
-                for(var p = 0; p < usernamesInGame.length; p++)
-                {
-                    if( p == 0)
-                    {
-                        winnerLastRoundPlayer = usernamesInGame[p];
-                        util.log("first player loop");
-                    }
-
-                    util.log("NAAM: " + usernamesInGame[p].name + usernamesInGame[p].points);
-
-
-                    if( winnerLastRoundPlayer.points < usernamesInGame[p].points )
-                    {
-                        winnerLastRoundPlayer = usernamesInGame[p];
-                        util.log("player winner changed");
-                    }
-
-                    usernamesInGame[p].points = 0;
-                }
-
+            }else{
                 socket.emit("lastRoundWinner", winnerLastRoundPlayer);
-
-
-
-                gameTimer = timerStartTime;
             }
 
-
-
-            
         }, miliSeconds);
+
+
 
 
     });
 
 
 }
+
+function timerControl(){
+
+    var timerStartTime = 91000;
+
+    var miliSeconds = 10;
+    setInterval(function () {
+        if(gameTimer > 0 )
+        {
+            gameTimer = gameTimer - miliSeconds;
+        }
+        else
+        {
+            for(var p = 0; p < usernamesInGame.length; p++)
+            {
+                if( p == 0)
+                {
+                    winnerLastRoundPlayer = usernamesInGame[p];
+                    util.log("first player loop");
+                }
+
+                util.log("NAAM: " + usernamesInGame[p].name + usernamesInGame[p].points);
+
+
+                if( winnerLastRoundPlayer.points < usernamesInGame[p].points )
+                {
+                    winnerLastRoundPlayer = usernamesInGame[p];
+                    util.log("player winner changed");
+                }
+
+                usernamesInGame[p].points = 0;
+            }
+            gameTimer = timerStartTime;
+        }
+    }, miliSeconds);
+
+
+
+}
+
 
 function checkPreviousWinner()
 {
