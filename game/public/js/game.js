@@ -157,11 +157,14 @@ var setEventHandlers = function() {
 
         console.log("WINNER" + playerWinner);
         console.log("kom ik hier in ?");
-        var tempPlayer = {name:playerWinner.name};
-        winner = tempPlayer;
+        /*var tempPlayer = {name:playerWinner.name};
+        winner = tempPlayer;*/
+
+        var winner = playerWinner;
+        console.log("WINNER" + playerWinner);
 
 
-        document.getElementById("winnerLastRound").innerHTML = winner.name;
+        document.getElementById("winnerLastRound").innerHTML = winner;
 
     });
 
@@ -349,6 +352,7 @@ function draw() {
     var i;
     for (i = 0; i < foodsArray.length; i++) {
         foodsArray[i].draw(ctx);
+
     };
 
 };

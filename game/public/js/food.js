@@ -7,7 +7,7 @@ var Food = function(startX, startY) {
         id,
         planetImage = new Image();
 
-    planetImage.src = "../assets/planet.png";
+    planetImage.src = "../assets/star3.png";
 
     var getX = function() {
         return x;

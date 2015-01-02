@@ -17,6 +17,8 @@ var socket,		// Socket controller
     winnerLastRoundName,
     winnerLastRoundPlayer,
     firstConnection,
+    winnerName,
+    secondWinnerName,
     usernamesInGame;
 
 
@@ -29,8 +31,10 @@ function init() {
 
     foods = [];
     usernamesInGame = [];
-    gameTimer = 0;
+    gameTimer = 9100;
     firstConnection = false;
+    winnerName = "";
+    secondWinnerName = "";
 
 	socket = io.listen(8000);
 
@@ -52,15 +56,14 @@ function init() {
 function generateFood()
 {
     var id = 0;
-    var timerStartTime = 10000;
+    var timerStartTime = 9100;
 
     timerControl();
 
     socket.sockets.on("connection", function (socket) {
 
-
         //DE INTERVAL!!!
-        var miliSeconds = 1;
+        var miliSeconds = 10;
         setInterval(function () {
 
             if(foods.length <= 1)
@@ -96,12 +99,29 @@ function generateFood()
             if(gameTimer > 0 )
             {
                 socket.emit("updateTimer", gameTimer);
-            }else{
+            }else if(gameTimer == 0 && winnerName != ""){
+                socket.emit("lastRoundWinner", winnerName);
+                util.log("emit winner wordt verzonden");
+
+
+                setTimeout(function(){
+
+                    for(var p = 0; p < usernamesInGame.length; p++)
+                    {
+                        usernamesInGame[p].points = 0;
+                    }
+
+                    gameTimer = timerStartTime;
+                    winnerName = "";
+
+
+                }, 500);
+
+
 
             }
 
         }, miliSeconds);
-
 
 
 
@@ -112,15 +132,17 @@ function generateFood()
 
 function timerControl(){
 
-    var timerStartTime = 12100;
+    var timerStartTime = 9100;
 
     var miliSeconds = 10;
+
+
     setInterval(function () {
-        if(gameTimer > 0 )
+        if(gameTimer > 0)
         {
             gameTimer = gameTimer - miliSeconds;
         }
-        else if(gameTimer < 2)
+        else if(gameTimer == 0 && winnerName == "")
         {
             for(var p = 0; p < usernamesInGame.length; p++)
             {
@@ -141,10 +163,12 @@ function timerControl(){
 
                 usernamesInGame[p].points = 0;
 
-                socket.emit("lastRoundWinner", winnerLastRoundPlayer);
+                winnerName = winnerLastRoundPlayer.name;
+                util.log("winner naam wordt in var gestoken");
+
                 util.log("WINNER" + winnerLastRoundPlayer.name);
             }
-            gameTimer = timerStartTime;
+
         }
     }, miliSeconds);
 
