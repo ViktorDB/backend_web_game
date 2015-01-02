@@ -1,0 +1,58 @@
+@font-face {
+    font-family: SQUARE;
+    src: url(FORCED_SQUARE.ttf);
+}
+
+@font-face {
+    font-family: SQUARE2;
+    src: url(Square.ttf);
+}
+
+.page-header
+{
+    border-bottom: 0px;
+}
+
+body
+{
+    background-image: url("stardust2.png");
+    padding-top: 12%;
+    font-family: SQUARE2;
+}
+
+h1
+{
+    font-size: 60px;
+    font-family: SQUARE;
+    color: #5fcd6a;
+}
+
+h3
+{
+    font-family: SQUARE;
+    color: #5fcd6a;
+}
+
+.btn
+{
+    font-size: 22px;
+    width: 120px;
+}
+
+.btn-index{
+    font-size: 22px;
+    width: 200px;
+}
+
+#nameofgame
+{
+    text-align: center;
+}
+
+
+
+textarea, input { outline: none; }
+
+input:focus {
+    outline: none;
+}
