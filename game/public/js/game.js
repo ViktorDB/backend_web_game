@@ -140,11 +140,11 @@ var setEventHandlers = function() {
 
         if(seconds < 10)
         {
-            var strTime = minutes + " : 0" + seconds;
+            var strTime = "0" + minutes + " : 0" + seconds;
         }
         else
         {
-            var strTime = minutes + " : " + seconds;
+            var strTime = "0" + minutes + " : " + seconds;
         }
 
 

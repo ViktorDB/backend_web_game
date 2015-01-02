@@ -1,11 +1,19 @@
+@font-face {
+    font-family: SQUARE;
+    src: url(FORCED_SQUARE.ttf);
+}
+
+
 body {
 	overflow: hidden;
     background-color: black;
+    background-image: url("stardust2.png");
+
 }
 
 canvas {
 
-
+    opacity: 1;
 }
 
 #canvasWrap
@@ -16,7 +24,7 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
-
+    background-color: black;
     border: 10px solid #fbfffd;
 }
 
@@ -43,6 +51,22 @@ canvas {
 .players
 {
     color: white;
+    font-family: SQUARE;
+    padding-left: 30px;
+}
+
+.players p
+{
+    font-size: 30px;
+    font-weight: bolder;
+    color: #5fcd6a;
+    margin: 0;
+    padding: 0;
+}
+
+.players li
+{
+    font-size: 26px;
 }
 
 #timer {
@@ -51,48 +75,99 @@ canvas {
     margin-bottom: 30px;
     width: 100%;
     text-align: center;
-    font-size: 26px;
+    font-size: 86px;
     font-weight: bolder;
+    font-family: SQUARE;
+    color: #5fcd6a;
 
 }
 
 #previousWinnerContainer
 {
-    color: white;
     text-align: right;
+    padding-right: 30px;
+    font-family: SQUARE;
+    position: relative;
+    top: -120px;
+}
+
+#previousWinnerContainer p
+{
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-family: SQUARE;
+    font-size: 30px;
+    color: #5fcd6a;
+}
+
+#previousWinnerContainer div
+{
+    font-size: 26px;
     padding-right: 20px;
+    font-family: SQUARE;
+    color: white;
+    margin: 0;
+    padding: 0;
 }
 
 #chat{
     position: fixed;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100.5%;
     height: 150px;
     border: 3px solid white;
     bottom: 0px;
+    background-color: white;
 }
 
 #chatbox{
-    height: 125px;
+    height: 135px;
     width: 100%;
-    background-color: aqua;
+    background-color: #313037;
     overflow: scroll;
+    position: relative;
+    color: white;
+}
+
+#chatbox p{
+    padding: 10px;
+    padding-bottom: 0px;
 }
 
 #chatText{
     width:75%;
-    height: 20px;
+    height: 19px;
     position: absolute;
     bottom: 0;
 }
 
+textarea, input { outline: none; }
+
 #send{
     position: absolute;
     height: 25px;
-    width: 20%;
+    width: 23.5%;
     bottom: 0;
-    right: 0;
-    background-color: cornflowerblue;
+    right: 15px;
+    background-color: #5fcd6a;
     text-align: center;
+    line-height: 30px;
+    font-size: 25px;
+    font-family: SQUARE;
+    text-transform: uppercase;
+}
+
+
+
+
+
+@media screen and (max-width: 910px) {
+    .players {
+        display: none;
+    }
+
+    #previousWinnerContainer
+    {
+        display: none;
+    }
 }
