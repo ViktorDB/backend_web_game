@@ -97,7 +97,7 @@ function generateFood()
             {
                 socket.emit("updateTimer", gameTimer);
             }else{
-                socket.emit("lastRoundWinner", winnerLastRoundPlayer);
+
             }
 
         }, miliSeconds);
@@ -112,7 +112,7 @@ function generateFood()
 
 function timerControl(){
 
-    var timerStartTime = 121000;
+    var timerStartTime = 12100;
 
     var miliSeconds = 10;
     setInterval(function () {
@@ -120,7 +120,7 @@ function timerControl(){
         {
             gameTimer = gameTimer - miliSeconds;
         }
-        else
+        else if(gameTimer < 2)
         {
             for(var p = 0; p < usernamesInGame.length; p++)
             {
@@ -140,6 +140,9 @@ function timerControl(){
                 }
 
                 usernamesInGame[p].points = 0;
+
+                socket.emit("lastRoundWinner", winnerLastRoundPlayer);
+                util.log("WINNER" + winnerLastRoundPlayer.name);
             }
             gameTimer = timerStartTime;
         }

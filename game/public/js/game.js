@@ -155,6 +155,8 @@ var setEventHandlers = function() {
     //UPDATE WINNER
     socket.on("lastRoundWinner", function(playerWinner) {
 
+        console.log("WINNER" + playerWinner);
+        console.log("kom ik hier in ?");
         var tempPlayer = {name:playerWinner.name};
         winner = tempPlayer;
 
@@ -163,9 +165,6 @@ var setEventHandlers = function() {
 
     });
 
-    socket.on('news', function(msg){
-        console.log("NEWS");
-    });
 
 };
 

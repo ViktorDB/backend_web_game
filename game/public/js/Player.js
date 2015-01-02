@@ -53,7 +53,7 @@ var Player = function(startX, startY, pointsgiven) {
 		};
 
         console.log("x: "+ x + " y: " + y);
-        if((x < 0) || (x > 500) || (y < 0) || (y > 500)){
+        if((x < 5) || (x > 485) || (y < 5) || (y > 485)){
             x = prevX;
             y = prevY;
             return false;
