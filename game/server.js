@@ -11,6 +11,9 @@ var flash    = require('connect-flash');
 var util = require("util");				// Utility resources (logging, object inspection, etc)
 var io = require("socket.io");				// Socket.IO
 
+var request = require('superagent');
+var expect = require('expect.js');
+
 serverIP = "";
 
 var morgan       = require('morgan');
@@ -65,3 +68,7 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);
+
+
+
+
