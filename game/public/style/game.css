@@ -3,6 +3,11 @@
     src: url(FORCED_SQUARE.ttf);
 }
 
+@font-face {
+    font-family: SQUARE2;
+    src: url(Square.ttf);
+}
+
 
 body {
 	overflow: hidden;
@@ -66,7 +71,8 @@ canvas {
 
 .players li
 {
-    font-size: 26px;
+    font-size: 22px;
+    font-family: SQUARE2;
 }
 
 #timer {
@@ -103,9 +109,9 @@ canvas {
 
 #previousWinnerContainer div
 {
-    font-size: 26px;
     padding-right: 20px;
-    font-family: SQUARE;
+    font-size: 22px;
+    font-family: SQUARE2;
     color: white;
     margin: 0;
     padding: 0;
@@ -127,6 +133,8 @@ canvas {
     overflow: scroll;
     position: relative;
     color: white;
+    font-family: SQUARE2;
+    letter-spacing: 1px;
 }
 
 #chatbox p{
@@ -135,10 +143,14 @@ canvas {
 }
 
 #chatText{
+    font-size: 22px;
     width:75%;
     height: 19px;
     position: absolute;
     bottom: 0;
+    font-family: SQUARE2;
+    letter-spacing: 1px;
+    line-height: 20px;
 }
 
 textarea, input { outline: none; }
