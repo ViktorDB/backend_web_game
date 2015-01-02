@@ -31,7 +31,7 @@ function init() {
 
     foods = [];
     usernamesInGame = [];
-    gameTimer = 9100;
+    gameTimer = 121000;
     firstConnection = false;
     winnerName = "";
     secondWinnerName = "";
@@ -56,7 +56,7 @@ function init() {
 function generateFood()
 {
     var id = 0;
-    var timerStartTime = 9100;
+    var timerStartTime = 121000;
 
     timerControl();
 
@@ -132,7 +132,7 @@ function generateFood()
 
 function timerControl(){
 
-    var timerStartTime = 9100;
+    var timerStartTime = 121000;
 
     var miliSeconds = 10;
 
