@@ -5,6 +5,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	io = require("socket.io");				// Socket.IO
 	Player = require("./Player").Player;	// Player class
     Food = require("./Food").Food;          // Food class
+var global = require('./global.js');
 
 
 /**************************************************
@@ -36,12 +37,14 @@ function init() {
     winnerName = "";
     secondWinnerName = "";
 
-	socket = io.listen(8000);
 
-	socket.configure(function()
+
+	//socket = io.listen(8000);
+
+	global.socket.configure(function()
 	{
-    	socket.set("transports", ["websocket"]);
-    	socket.set("log level", 2);
+        global.socket.set("transports", ["websocket"]);
+    	global.socket.set("log level", 2);
 	});
 
 	setEventHandlers();
@@ -60,7 +63,7 @@ function generateFood()
 
     timerControl();
 
-    socket.sockets.on("connection", function (socket) {
+    global.socket.sockets.on("connection", function (socket) {
 
         //DE INTERVAL!!!
         var miliSeconds = 10;
@@ -180,7 +183,7 @@ function timerControl(){
 function checkPreviousWinner()
 {
     var test = 'test';
-    socket.sockets.on("connection", function (socket) {
+    global.socket.sockets.on("connection", function (socket) {
         socket.emit('news', test);
     });
 }
@@ -188,7 +191,7 @@ function checkPreviousWinner()
 
 
 var setEventHandlers = function() {
-    socket.sockets.on("connection", onSocketConnection);
+    global.socket.sockets.on("connection", onSocketConnection);
 };
 
 function onSocketConnection(client) {

@@ -3,13 +3,21 @@
 // set up ======================================================================
 // get all the tools we need
 var express  = require('express');
+var global = require('./global.js');
 app      = express();
+var server = require('http').createServer(app);
 var port     = process.env.PORT || 8080;
+global.port = port;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var util = require("util");				// Utility resources (logging, object inspection, etc)
-var io = require("socket.io");				// Socket.IO
+var io = require("socket.io");
+				// Socket.IO
+global.socket = io.listen(server);
+util.log(global.socket.po);
+
+//server = app.listen(port);
 
 //var request = require('superagent');
 //var expect = require('expect.js');
