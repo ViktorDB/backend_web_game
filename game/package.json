@@ -28,6 +28,7 @@
     "devDependencies": {
         "mocha": "*",
         "should": ">= 0.0.1",
-        "expect.js" : "*"
+        "expect.js" : "*",
+        "superagent" : "*"
     }
 }

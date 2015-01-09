@@ -2,7 +2,7 @@
  * Created by Viktor on 02/01/15.
  */
 
-
+/*
 var request = require('superagent');
 var expect = require('expect.js');
 
@@ -16,4 +16,4 @@ describe('Suite one', function(){
             done();
         });
     });
-});
+});*/

@@ -1,6 +1,6 @@
 'use strict';
 
-var request = require('superagent');
+//var request = require('superagent');
 var expect = require('expect.js');
 
 describe('isMochaWorking', function () {
@@ -13,7 +13,7 @@ describe('isMochaWorking', function () {
     });
 });
 
-
+/*
 describe('Suite one', function(){
     it (function(done){
         request.post('http://192.168.7.226:8080/').end(function(res){
@@ -22,4 +22,4 @@ describe('Suite one', function(){
             done();
         });
     });
-});
+});*/
