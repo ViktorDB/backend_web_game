@@ -28,16 +28,16 @@ require('./gameServer.js');
 
 
 var os=require('os');
-console.log("1" + os);
+//console.log("1" + os);
 var ifaces=os.networkInterfaces();
-console.log("2" + ifaces);
+//console.log("2" + ifaces);
 for (var dev in ifaces) {
-    console.log("3" + dev);
+    //console.log("3" + dev);
     var alias=0;
     ifaces[dev].forEach(function(details){
-        console.log("4" + details);
+        //console.log("4" + details);
         if (details.family=='IPv4' && details.internal === false) {
-            console.log(dev+(alias?':'+alias:''),details.address);
+            //console.log(dev+(alias?':'+alias:''),details.address);
             serverIP = details.address;
             ++alias;
         }

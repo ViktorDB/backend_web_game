@@ -46,7 +46,11 @@ function init() {
 
 	// Initialise the local player
 
-    socket = io.connect("http://172.17.207.190", {port: 8000, transports: ["websocket"]});
+    // VOOR LOKAAL TE SPELEN
+    //socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
+
+    // VOOR ONLINE
+    socket = io.connect("https://calm-bayou-3140.herokuapp.com", {port: 8000, transports: ["websocket"]});
 
 	localPlayer = new Player(startX, startY, 0);
 
