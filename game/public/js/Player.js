@@ -9,7 +9,7 @@ var Player = function(startX, startY, pointsgiven) {
         points = pointsgiven,
         monsterImage = new Image();
 
-    monsterImage.src = "../assets/monsterkopie2.png";
+    monsterImage.src = "../assets/monster_groen.png";
 
     var getX = function() {
         return x;
