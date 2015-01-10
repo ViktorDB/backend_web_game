@@ -1,6 +1,7 @@
 var Global =
 {
     socket : {},
-    port : {}
+    port : {},
+    io : {}
 };
 module.exports = Global;

@@ -47,13 +47,10 @@ function init() {
 	// Initialise the local player
 
     // VOOR LOKAAL TE SPELEN
-    //var socket = new io.Socket();
-    //socket.connect('http://192.168.7.226');
-    //socket = io.connect("http://192.168.7.226", {port: 8080, transports: ["websocket"]});
-    socket = io.connect("http://192.168.7.226", {port: 8000, transports: ["websocket"]});
+    //socket = io.connect("http://192.168.7.226");
 
     // VOOR ONLINE
-    //socket = io.connect("https://calm-bayou-3140.herokuapp.com", {port: 80, transports: ["websocket"]});
+    socket = io.connect("http://nmctbackendgame-41877.onmodulus.net");
 
 	localPlayer = new Player(startX, startY, 0);
 
@@ -162,13 +159,13 @@ var setEventHandlers = function() {
     //UPDATE WINNER
     socket.on("lastRoundWinner", function(playerWinner) {
 
-        console.log("WINNER" + playerWinner);
-        console.log("kom ik hier in ?");
+        //console.log("WINNER" + playerWinner);
+        //console.log("kom ik hier in ?");
         /*var tempPlayer = {name:playerWinner.name};
         winner = tempPlayer;*/
 
         var winner = playerWinner;
-        console.log("WINNER" + playerWinner);
+        //console.log("WINNER" + playerWinner);
 
 
         document.getElementById("winnerLastRound").innerHTML = winner;
@@ -201,24 +198,24 @@ function onResize(e) {
 };
 
 function onSocketConnected() {
-    console.log("Connected to socket server");
+    //console.log("Connected to socket server");
 
     socket.emit("new player", {x: localPlayer.getX(), y: localPlayer.getY(), points: localPlayer.getPoints(), name:localPlayer.name});
 
 };
 
 function onSocketDisconnect() {
-    console.log("Disconnected from socket server");
+    //console.log("Disconnected from socket server");
 };
 
 function onNewPlayer(data) {
-    console.log("New player connected: "+data.id);
-    console.log(data);
+    //console.log("New player connected: "+data.id);
+    //console.log(data);
 
     var newPlayer = new Player(data.x, data.y, data.points, data.name);
     newPlayer.id = data.id;
     remotePlayers.push(newPlayer);
-    console.log(remotePlayers[0].getPoints());
+    //console.log(remotePlayers[0].getPoints());
     //console.log(data);
 };
 
@@ -226,20 +223,20 @@ function onNewPlayer(data) {
 function onMovePlayer(data) {
     var movePlayer = playerById(data.id);
 
-    console.log("kom ik hier in?");
+    //console.log("kom ik hier in?");
 
     if (!movePlayer) {
-        console.log("Player not found: "+data.id);
+        //console.log("Player not found: "+data.id);
         return;
     };
 
     movePlayer.setX(data.x);
-    console.log('moveplayer');
+    //console.log('moveplayer');
 
     movePlayer.setY(data.y);
     movePlayer.setPoints(data.points);
 
-    console.log("moveplayer: " + data.points);
+    //console.log("moveplayer: " + data.points);
 
 };
 
@@ -284,7 +281,7 @@ function checkForFoodAndPlayerCollision(currentPlayer)
             if((dist.x < 15) && (dist.x > -15) && (dist.y < 15) && (dist.y > -15))
             {
                 currentPlayer.setPoints(currentPlayer.getPoints() + 10);
-                console.log("Localplayer points: " + localPlayer.getPoints());
+                //console.log("Localplayer points: " + localPlayer.getPoints());
             }
         }
     }
@@ -296,7 +293,7 @@ function onRemovePlayer(data) {
     var removePlayer = playerById(data.id);
 
     if (!removePlayer) {
-        console.log("Player not found: "+data.id);
+        //console.log("Player not found: "+data.id);
         return;
     };
 
@@ -335,7 +332,7 @@ function update() {
     };
 
 
-    console.log()
+    //console.log()
 
 };
 
@@ -396,7 +393,7 @@ function sendChatMessage(){
 }
 
 function onNewMessage(data) {
-    console.log(data.user + " " + data.text);
+    //console.log(data.user + " " + data.text);
     chatbox.innerHTML +=    "<p>" +
                             data.user + " : " + data.text +
                             "</p>";

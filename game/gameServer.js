@@ -39,12 +39,12 @@ function init() {
 
 
 
-	socket = io.listen(8000);
+	//socket = io.listen(80);
 
-	socket.configure(function()
+	global.io.configure(function()
 	{
-    	socket.set("transports", ["websocket"]);
-    	socket.set("log level", 2);
+        global.io.set("transports", ["websocket"]);
+        global.io.set("log level", 2);
 	});
 
 	setEventHandlers();
@@ -63,7 +63,7 @@ function generateFood()
 
     timerControl();
 
-    socket.sockets.on("connection", function (socket) {
+    global.io.sockets.on("connection", function (socket) {
 
         //DE INTERVAL!!!
         var miliSeconds = 10;
@@ -183,7 +183,7 @@ function timerControl(){
 function checkPreviousWinner()
 {
     var test = 'test';
-    socket.sockets.on("connection", function (socket) {
+    global.io.sockets.on("connection", function (socket) {
         socket.emit('news', test);
     });
 }
@@ -191,7 +191,7 @@ function checkPreviousWinner()
 
 
 var setEventHandlers = function() {
-    socket.sockets.on("connection", onSocketConnection);
+    global.io.sockets.on("connection", onSocketConnection);
 };
 
 function onSocketConnection(client) {

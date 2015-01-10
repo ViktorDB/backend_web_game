@@ -54,7 +54,7 @@ var Player = function(startX, startY, pointsgiven) {
 			x += moveAmount;
 		};
 
-        console.log("x: "+ x + " y: " + y);
+        //console.log("x: "+ x + " y: " + y);
         if((x < 5) || (x > 485) || (y < 5) || (y > 485)){
             x = prevX;
             y = prevY;

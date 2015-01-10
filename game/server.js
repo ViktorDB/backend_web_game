@@ -3,14 +3,18 @@
 // set up ======================================================================
 // get all the tools we need
 var express  = require('express');
-app      = express();
+var global  = require('./global.js');
+var http = require('http');
+
+app      = module.exports.app = express()
+var server = http.createServer(app);
 var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var util = require("util");				// Utility resources (logging, object inspection, etc)
-var io = require("socket.io");				// Socket.IO
-
+var io = require("socket.io").listen(server);				// Socket.IO
+global.io = io;
 //var request = require('superagent');
 //var expect = require('expect.js');
 
@@ -61,7 +65,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(session({ secret: 'ilovebackend' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -70,7 +74,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(port);
+server.listen(port);
 console.log('The magic happens on port ' + port);
 
 
